@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>info.gouv.fr — Catalogue Officiel des Cannes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Marianne:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav-top">
+    <div class="nav-logo">
+      <div class="logo-tricolore"><span></span><span></span><span></span></div>
+      <div>
+        <span class="nav-logo-texte">GOUVERNEMENT
+          <span class="nav-logo-sub">Liberté · Égalité · Fraternité</span>
+        </span>
+      </div>
+    </div>
+    <span class="nav-site">info.gouv.fr</span>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <h1 class="hero-titre">
+      Je cherche <span class="selecteur" id="filtre-type">Toute Canne</span><br>
+      <em>en finition</em> <span class="selecteur" id="filtre-finition">Toute Matière</span>
+    </h1>
+    <button class="btn-filtres">Filtres avancés ☰</button>
+  </header>
+
+  <!-- LETTRE D'INTRODUCTION -->
+  <section class="lettre-intro">
+    <div class="lettre-inner">
+      <div class="encart-alerte">
+        <span class="alerte-icone">📋</span>
+        <div>
+          <p class="alerte-titre">Notification officielle</p>
+          <p class="alerte-texte"><strong>Objet :</strong> Éligibilité au Bon de Réduction Cannes Made in France (BRCMF) · <strong>Affaire suivie par :</strong> Macron E., Président · Direction des Affaires Grand-Parentales</p>
+        </div>
+      </div>
+      <div class="article-bloc">
+        <p class="article-date">Paris, le <span id="date-courrier"></span></p>
+        <p>Monsieur Guérineau,</p>
+        <p>
+          C'est avec la solennité que requiert l'événement — et la gravité que commande l'état
+          de vos articulations — que la République Française vous adresse ses félicitations les
+          plus officielles pour votre accession au rang de <strong>Grand-Père de la Nation</strong>.
+        </p>
+        <p>
+          À ce titre, et conformément au décret n°2026-42 relatif à la <em>Politique Nationale
+          de Soutien à la Locomotion des Aïeuls Méritants</em>, vous êtes en droit de bénéficier
+          d'un bon de réduction sur l'acquisition d'une canne de marche issue de nos manufactures
+          nationales.
+        </p>
+        <p>
+          Veuillez consulter ci-après notre catalogue officiel, puis procéder au grattage de votre
+          bon personnel. La République n'a pas prévu d'enveloppe retour. Elle non plus ne s'excuse pas.
+        </p>
+        <div class="signature-bloc">
+          <p><em>Pour la République, et avec toute la déférence institutionnelle que vous méritez,</em></p>
+          <p class="sig-nom">Emmanuel Macron</p>
+          <p class="sig-titre">Président de la République · À l'attention d'Emmanuel Guérineau, Grand-Père de la Nation · Qui, lui, n'a pas pleuré.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATALOGUE -->
+  <main class="catalogue">
+    <div class="grille" id="grille">
+
+      <div class="carte" data-id="republicaine" onclick="ouvrirPanel('republicaine')">
+        <div class="carte-img">
+          <div class="canne-svg">
+            <svg viewBox="0 0 120 200" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+              <rect x="55" y="10" width="10" height="150" rx="5" fill="#8B6914"/>
+              <ellipse cx="60" cy="170" rx="8" ry="5" fill="#5a4010"/>
+              <path d="M55 10 Q35 10 35 35 Q35 55 55 55" fill="none" stroke="#8B6914" stroke-width="10" stroke-linecap="round"/>
+              <rect x="30" y="30" width="6" height="3" fill="#003189"/>
+              <rect x="30" y="36" width="6" height="3" fill="white"/>
+              <rect x="30" y="42" width="6" height="3" fill="#E1000F"/>
+            </svg>
+          </div>
+        </div>
+        <div class="carte-infos">
+          <p class="carte-nom">La Républicaine</p>
+          <div class="carte-prix-ligne">
+            <span class="carte-prix-base" data-prix="189">À partir de 189 €</span>
+            <span class="carte-prix-reduit" data-prix="189"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="carte" data-id="souveraine" onclick="ouvrirPanel('souveraine')">
+        <div class="carte-img">
+          <div class="canne-svg">
+            <svg viewBox="0 0 120 200" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+              <rect x="55" y="10" width="10" height="150" rx="5" fill="#1a3a6e"/>
+              <ellipse cx="60" cy="170" rx="8" ry="5" fill="#0d1f3c"/>
+              <path d="M55 10 Q38 10 38 30 Q38 48 55 48" fill="none" stroke="#1a3a6e" stroke-width="10" stroke-linecap="round"/>
+              <rect x="52" y="60" width="16" height="4" rx="1" fill="#c9a227"/>
+              <rect x="52" y="100" width="16" height="4" rx="1" fill="#c9a227"/>
+            </svg>
+          </div>
+        </div>
+        <div class="carte-infos">
+          <p class="carte-nom">La Souveraine</p>
+          <div class="carte-prix-ligne">
+            <span class="carte-prix-base" data-prix="215">À partir de 215 €</span>
+            <span class="carte-prix-reduit" data-prix="215"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="carte" data-id="resistante" onclick="ouvrirPanel('resistante')">
+        <div class="carte-img">
+          <div class="canne-svg">
+            <svg viewBox="0 0 120 200" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+              <rect x="55" y="10" width="11" height="155" rx="4" fill="#5c3a1e"/>
+              <ellipse cx="60" cy="172" rx="9" ry="6" fill="#2d1a08"/>
+              <path d="M55 10 Q40 10 40 32 Q40 50 55 50" fill="none" stroke="#5c3a1e" stroke-width="11" stroke-linecap="round"/>
+              <rect x="52" y="80" width="15" height="40" rx="3" fill="#333" opacity="0.5"/>
+            </svg>
+          </div>
+        </div>
+        <div class="carte-infos">
+          <p class="carte-nom">La Résistante</p>
+          <div class="carte-prix-ligne">
+            <span class="carte-prix-base" data-prix="172">À partir de 172 €</span>
+            <span class="carte-prix-reduit" data-prix="172"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="carte" data-id="presidentielle" onclick="ouvrirPanel('presidentielle')">
+        <span class="badge-prestige">PRESTIGE</span>
+        <div class="carte-img" style="background: linear-gradient(135deg,#f5efe0,#e8d9b0)">
+          <div class="canne-svg">
+            <svg viewBox="0 0 120 200" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+              <rect x="55" y="15" width="10" height="145" rx="5" fill="#1a0a00"/>
+              <ellipse cx="60" cy="168" rx="8" ry="5" fill="#0a0400"/>
+              <path d="M55 15 Q37 15 37 36 Q37 54 55 54" fill="none" stroke="#1a0a00" stroke-width="10" stroke-linecap="round"/>
+              <path d="M37 36 Q37 54 55 54" fill="none" stroke="#c9a227" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="60" cy="15" r="8" fill="#c9a227"/>
+              <path d="M56 15 L60 11 L64 15 L62 15 L62 20 L58 20 L58 15Z" fill="#1a0a00"/>
+            </svg>
+          </div>
+        </div>
+        <div class="carte-infos">
+          <p class="carte-nom">La Présidentielle</p>
+          <div class="carte-prix-ligne">
+            <span class="carte-prix-base" data-prix="489">À partir de 489 €</span>
+            <span class="carte-prix-reduit" data-prix="489"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="carte" data-id="sensuelle" onclick="ouvrirPanel('sensuelle')">
+        <span class="badge-new">NOUVEAU</span>
+        <div class="carte-img">
+          <div class="canne-svg">
+            <svg viewBox="0 0 120 200" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+              <rect x="55" y="40" width="11" height="140" rx="5" fill="#c47a5a"/>
+              <ellipse cx="60" cy="188" rx="9" ry="6" fill="#7a3b20"/>
+              <ellipse cx="60" cy="30" rx="16" ry="20" fill="#e8a882"/>
+              <ellipse cx="60" cy="18" rx="13" ry="10" fill="#d4845a"/>
+              <path d="M44 30 Q44 45 60 45 Q76 45 76 30" fill="#c47a5a"/>
+            </svg>
+          </div>
+        </div>
+        <div class="carte-infos">
+          <p class="carte-nom">La Sensuelle</p>
+          <div class="carte-prix-ligne">
+            <span class="carte-prix-base" data-prix="267">À partir de 267 €</span>
+            <span class="carte-prix-reduit" data-prix="267"></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- BON À GRATTER -->
+  <section class="section-scratch" id="grattage">
+    <p class="section-titre">§ II — Votre bon personnel à gratter</p>
+    <div class="bon-officiel">
+      <div class="bon-header">
+        <div class="bon-logo-rf">
+          <div class="logo-tricolore" style="height:22px;width:5px"><span></span><span></span><span></span></div>
+          RÉPUBLIQUE FRANÇAISE
+        </div>
+        <span class="bon-ref">BON N° RF-<span id="bon-numero"></span></span>
+      </div>
+      <div class="bon-body">
+        <p class="bon-titre">BON DE RÉDUCTION OFFICIEL</p>
+        <p class="bon-instructions">↓ Grattez pour révéler votre avantage ↓</p>
+        <div class="scratch-wrapper">
+          <div class="scratch-reveal" id="scratch-reveal">
+            <div class="reveal-doigt" id="reveal-doigt">
+              <span class="emoji-doigt">🖕</span>
+            </div>
+          </div>
+          <canvas id="scratch-canvas" height="180"></canvas>
+        </div>
+        <div class="scratch-progress-wrap">
+          <div class="scratch-progress-label">
+            <span>Progression du grattage</span>
+            <span id="scratch-pct">0 %</span>
+          </div>
+          <div class="scratch-progress-bar">
+            <div class="scratch-progress-fill" id="scratch-progress-fill"></div>
+            <div class="scratch-progress-marker" id="scratch-progress-marker" style="left:70%">
+              <span class="scratch-marker-label">🎁</span>
+            </div>
+          </div>
+        </div>
+        <p class="scratch-guide" id="scratch-guide"></p>
+      </div>
+      <div class="bon-footer">
+        <p>Valable jusqu'au 31 décembre 2026 · Non cumulable avec la bonne volonté de l'État</p>
+        <p>Le bon ne constitue pas une promesse de livraison dans les délais impartis.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PANEL DÉTAIL (bottom sheet) -->
+  <div class="panel-overlay" id="panel-overlay" onclick="fermerPanel(event)">
+    <div class="panel" id="panel">
+      <div class="panel-handle"></div>
+
+      <div class="panel-img" id="panel-img">
+        <div class="canne-svg" id="panel-svg"></div>
+      </div>
+
+      <div class="panel-body">
+        <p class="panel-breadcrumb">Produits / Cannes / <span id="panel-breadcrumb-nom"></span></p>
+        <h2 class="panel-nom" id="panel-nom"></h2>
+        <p class="panel-collection" id="panel-collection"></p>
+
+        <div class="panel-actions">
+          <button class="btn-panier">🛒 Ajouter la main au panier</button>
+          <button class="btn-share" onclick="copierUrl()">Partager ses MST ↗</button>
+        </div>
+
+        <div class="panel-sep"></div>
+
+        <div class="panel-champ">
+          <p class="panel-label">Matière & Finition</p>
+          <div class="panel-option selected" id="panel-option-matiere">
+            <div class="opt-dot" style="background:#1a1a1a;border-color:#1a1a1a"></div>
+            <span id="panel-matiere-texte"></span>
+          </div>
+        </div>
+
+        <div class="panel-sep"></div>
+
+        <p class="panel-desc" id="panel-desc"></p>
+
+        <span class="badge-mif">🇫🇷 Made in France · Certifié NF</span>
+
+        <div class="panel-prix-bloc">
+          <span class="panel-prix-from">À partir de</span>
+          <span class="panel-prix-val" id="panel-prix-val"></span>
+          <span class="panel-prix-barre" id="panel-prix-barre"></span>
+          <span class="panel-prix-reduit" id="panel-prix-reduit"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- POPUP AMELI -->
+  <div class="popup-overlay" id="popup-overlay" onclick="fermerPopup(event)">
+    <div class="popup-ameli">
+      <button class="popup-fermer" onclick="fermerPopupBtn()">Fermer ✕</button>
+      <div class="popup-ameli-logo">
+        <span class="ameli-word">ameli</span>
+        <span class="ameli-sub">assurance maladie</span>
+      </div>
+      <div class="popup-corps">
+        <p class="popup-titre">🔔 Information relative à votre dossier</p>
+        <p class="popup-intro">
+          Monsieur Guérineau, une analyse automatisée de votre dossier Ameli
+          (algorithme MinSanté v4.2 dit <em>« Détecteur de Besoins Inavoués »</em>)
+          a mis en évidence qu'un autre bon vous serait <strong>bien plus utile</strong>.
+        </p>
+        <div class="bon-penis">
+          <div class="bon-penis-header">
+            <span>CAISSE NATIONALE D'ASSURANCE MALADIE</span>
+            <span>BON DE SOINS COMPLÉMENTAIRES</span>
+          </div>
+          <div class="tampon-bonus">VALIDÉ</div>
+          <p class="bon-penis-ligne"><strong>Objet :</strong> Agrandissement chirurgical et/ou psychologique du pénis</p>
+          <p class="bon-penis-ligne"><strong>Code acte :</strong> <span id="code-acte"></span></p>
+          <p class="bon-penis-ligne"><strong>Prise en charge Sécu :</strong> <span class="rouge-texte">0 %</span> — <em>Le contribuable a ses limites.</em></p>
+          <p class="bon-penis-ligne"><strong>Validité :</strong> <span id="date-validite-penis"></span></p>
+          <div class="mentions-legales-bonus">
+            <p>¹ Ce bon ne constitue pas un aveu de la République quant à la réalité du besoin.</p>
+            <p>² La Sécu décline toute responsabilité en cas de déception post-opératoire.</p>
+            <p>³ Réclamations : Médiateur de la République, qui a d'autres chats à fouetter.</p>
+            <p>⁴ L'utilisation de ce bon emporte acceptation implicite de l'état de la situation.</p>
+          </div>
+        </div>
+        <button class="popup-btn-autoriser" onclick="fermerPopupBtn()">Autoriser les notifications</button>
+        <a class="popup-lien-donnees">Consulter le traitement des données personnelles</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer-rf">
+    <div class="footer-logo">
+      <div class="logo-tricolore" style="height:40px"><span></span><span></span><span></span></div>
+      <div>
+        <p class="footer-nom">GOUVERNEMENT</p>
+        <p style="font-size:0.62rem;opacity:0.5">Liberté · Égalité · Fraternité</p>
+      </div>
+    </div>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <p class="footer-col-titre">À propos</p>
+        <p>Direction du Réarmement Démographique</p>
+        <p>Service des Grands-Pères Méritants</p>
+        <p>NOR : PRES2600042X</p>
+      <p>Destinataire : Emmanuel Guérineau</p>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-titre">Légal</p>
+        <p>Toute reproduction à des fins de rigolade est encouragée par décret.</p>
+        <p>Les prix sont indicatifs.</p>
+      </div>
+    </div>
+    <div class="footer-bas">
+      <p class="footer-sig">Macron E., Président · Qui, lui, n'a pas pleuré.</p>
+      <p>© République Française 2026 · JORF du <span id="date-jorf"></span> · Accessibilité : non conforme (on fait ce qu'on peut)</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
