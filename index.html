@@ -23,15 +23,6 @@
     <span class="nav-site">info.gouv.fr</span>
   </nav>
 
-  <!-- HERO -->
-  <header class="hero">
-    <h1 class="hero-titre">
-      Je cherche <span class="selecteur" id="filtre-type">Toute Canne</span><br>
-      <em>en finition</em> <span class="selecteur" id="filtre-finition">Toute Matière</span>
-    </h1>
-    <button class="btn-filtres">Filtres avancés ☰</button>
-  </header>
-
   <!-- LETTRE D'INTRODUCTION -->
   <section class="lettre-intro">
     <div class="lettre-inner">
@@ -63,7 +54,7 @@
         <div class="signature-bloc">
           <p><em>Pour la République, et avec toute la déférence institutionnelle que vous méritez,</em></p>
           <p class="sig-nom">Emmanuel Macron</p>
-          <p class="sig-titre">Président de la République · À l'attention d'Emmanuel Guérineau, Grand-Père de la Nation · Qui, lui, n'a pas pleuré.</p>
+          <p class="sig-titre">Président de la République · À l'attention d'Emmanuel Guérineau, Grand-Père de la Nafion</p>
         </div>
       </div>
     </div>
@@ -213,12 +204,12 @@
           </div>
           <div class="scratch-progress-bar">
             <div class="scratch-progress-fill" id="scratch-progress-fill"></div>
-            <div class="scratch-progress-marker" id="scratch-progress-marker" style="left:70%">
+            <div class="scratch-progress-marker">
               <span class="scratch-marker-label">🎁</span>
             </div>
           </div>
         </div>
-        <p class="scratch-guide" id="scratch-guide"></p>
+        <button class="btn-rejouer" id="btn-rejouer" style="display:none" onclick="rejouerScratch()">↺ Rejouer</button>
       </div>
       <div class="bon-footer">
         <p>Valable jusqu'au 31 décembre 2026 · Non cumulable avec la bonne volonté de l'État</p>
@@ -231,6 +222,7 @@
   <div class="panel-overlay" id="panel-overlay" onclick="fermerPanel(event)">
     <div class="panel" id="panel">
       <div class="panel-handle"></div>
+      <button class="panel-close" onclick="_fermerPanel()">✕</button>
 
       <div class="panel-img" id="panel-img">
         <div class="canne-svg" id="panel-svg"></div>
@@ -275,7 +267,7 @@
   <!-- POPUP AMELI -->
   <div class="popup-overlay" id="popup-overlay" onclick="fermerPopup(event)">
     <div class="popup-ameli">
-      <button class="popup-fermer" onclick="fermerPopupBtn()">Fermer ✕</button>
+      <button class="popup-fermer" onclick="fermerPopupBtn()">✕</button>
       <div class="popup-ameli-logo">
         <span class="ameli-word">ameli</span>
         <span class="ameli-sub">assurance maladie</span>
@@ -292,7 +284,6 @@
             <span>CAISSE NATIONALE D'ASSURANCE MALADIE</span>
             <span>BON DE SOINS COMPLÉMENTAIRES</span>
           </div>
-          <div class="tampon-bonus">VALIDÉ</div>
           <p class="bon-penis-ligne"><strong>Objet :</strong> Agrandissement chirurgical et/ou psychologique du pénis</p>
           <p class="bon-penis-ligne"><strong>Code acte :</strong> <span id="code-acte"></span></p>
           <p class="bon-penis-ligne"><strong>Prise en charge Sécu :</strong> <span class="rouge-texte">0 %</span> — <em>Le contribuable a ses limites.</em></p>
@@ -304,7 +295,7 @@
             <p>⁴ L'utilisation de ce bon emporte acceptation implicite de l'état de la situation.</p>
           </div>
         </div>
-        <button class="popup-btn-autoriser" onclick="fermerPopupBtn()">Autoriser les notifications</button>
+        <button class="popup-btn-autoriser" onclick="fermerPopupBtn()">Cliquez pour prendre un rendez-vous</button>
         <a class="popup-lien-donnees">Consulter le traitement des données personnelles</a>
       </div>
     </div>

@@ -258,6 +258,25 @@ body {
   border-radius: 2px;
   margin: 12px auto 0;
 }
+.panel-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--bordure);
+  background: #fff;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--texte);
+  z-index: 10;
+  font-family: var(--sans);
+}
+.panel-close:hover { background: var(--fond-card); }
 
 .panel-img {
   aspect-ratio: 4/3;
@@ -634,10 +653,12 @@ body {
 .scratch-progress-fill.pret {
   background: linear-gradient(90deg, #E1000F 0%, #a00009 100%);
 }
+/* Marqueur 🎁 toujours à droite (100% de la barre visible) */
 .scratch-progress-marker {
   position: absolute;
   top: 50%;
-  transform: translate(-50%, -50%);
+  right: 0;
+  transform: translate(50%, -50%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -656,6 +677,21 @@ body {
   line-height: 1;
   margin-top: -6px;
 }
+
+/* Bouton rejouer */
+.btn-rejouer {
+  display: block;
+  margin: 10px auto 0;
+  background: none;
+  border: 1px solid var(--bordure);
+  padding: 6px 18px;
+  font-size: 0.78rem;
+  color: var(--texte-sec);
+  cursor: pointer;
+  font-family: var(--sans);
+  letter-spacing: 0.04em;
+}
+.btn-rejouer:hover { background: var(--fond-card); color: var(--texte); }
 
 /* Texte guide grattage */
 .scratch-guide {
@@ -702,16 +738,24 @@ body {
 @keyframes popIn { from { transform: scale(0.94); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 .popup-fermer {
   position: absolute;
-  top: 12px;
-  right: 12px;
-  background: none;
-  border: 1px solid var(--bordure);
-  padding: 4px 12px;
-  font-size: 0.75rem;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.9);
+  border: 1px solid rgba(255,255,255,0.5);
+  font-size: 0.8rem;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #003189;
+  font-weight: 700;
+  z-index: 10;
   font-family: var(--sans);
-  z-index: 1;
 }
+.popup-fermer:hover { background: #fff; }
 .popup-ameli-logo {
   background: #009de0;
   color: #fff;

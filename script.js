@@ -160,20 +160,26 @@ function copierUrl() {
 /* ═══════════════════════════════════════════
    CARTE À GRATTER
 ═══════════════════════════════════════════ */
-(function initScratch() {
+const scratch = (function initScratch() {
   const canvas = document.getElementById('scratch-canvas');
-  if (!canvas) return;
-
-  // Canvas prend la largeur de son parent
-  function resizeCanvas() {
-    const w = canvas.parentElement.offsetWidth;
-    canvas.width = w;
-    canvas.height = 180;
-    drawGold();
-  }
+  if (!canvas) return {};
 
   const ctx = canvas.getContext('2d');
+  const SEUIL_POPUP  = 0.50;
+  const VISUAL_SCALE = 1 / SEUIL_POPUP; // 50% réel = 100% visuel
+
+  const fillEl    = document.getElementById('scratch-progress-fill');
+  const pctEl     = document.getElementById('scratch-pct');
+  const btnRejouer = document.getElementById('btn-rejouer');
+  const doigtEl   = document.getElementById('reveal-doigt');
+
+  // ── État réinitialisable ──────────────────
+  let isDrawing  = false;
+  let doigtShown = false;
+  let bonusShown = false;
+
   function drawGold() {
+    ctx.globalCompositeOperation = 'source-over';
     const W = canvas.width, H = canvas.height;
     const grad = ctx.createLinearGradient(0, 0, W, H);
     grad.addColorStop(0,   '#d4a017');
@@ -191,30 +197,29 @@ function copierUrl() {
       ctx.stroke();
     }
     ctx.fillStyle = 'rgba(130,90,0,0.55)';
-    ctx.font = `bold 13px Arial, sans-serif`;
+    ctx.font = 'bold 13px Arial, sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText('✦ GRATTEZ ICI ✦', W/2, H/2 - 9);
     ctx.font = '11px Arial, sans-serif';
     ctx.fillText('Révélez votre bon républicain', W/2, H/2 + 10);
   }
 
-  resizeCanvas();
-  window.addEventListener('resize', resizeCanvas);
+  function resizeCanvas() {
+    const w = canvas.parentElement.offsetWidth;
+    canvas.width  = w;
+    canvas.height = 180;
+    drawGold();
+  }
 
-  const GUIDES = [
-    { seuil: 0.05, texte: 'Continuez à gratter, Monsieur Guérineau…' },
-    { seuil: 0.20, texte: 'Vous brûlez. La République a quelque chose pour vous.' },
-    { seuil: 0.40, texte: 'Encore un effort. Le bon se mérite.' },
-    { seuil: 0.58, texte: 'Presque… la République retient son souffle.' },
-    { seuil: 0.68, texte: 'Encore trois coups de doigt, Monsieur Guérineau.' },
-  ];
-
-  let isDrawing = false;
-  let doigtShown = false, bonusShown = false;
-  let lastGuide = -1;
-  const guideEl = document.getElementById('scratch-guide');
-  const fillEl = document.getElementById('scratch-progress-fill');
-  const pctEl  = document.getElementById('scratch-pct');
+  function reset() {
+    doigtShown = false;
+    bonusShown = false;
+    doigtEl.classList.remove('visible');
+    if (fillEl) { fillEl.style.width = '0%'; fillEl.classList.remove('pret'); }
+    if (pctEl)  { pctEl.textContent = '0 %'; pctEl.classList.remove('pret'); }
+    if (btnRejouer) btnRejouer.style.display = 'none';
+    drawGold();
+  }
 
   function getRatio() {
     const W = canvas.width, H = canvas.height;
@@ -224,43 +229,34 @@ function copierUrl() {
     return t / (W * H / 16);
   }
 
-  function scratch(x, y) {
+  function doScratch(x, y) {
     ctx.globalCompositeOperation = 'destination-out';
     ctx.beginPath();
     ctx.arc(x, y, Math.min(canvas.width * 0.065, 24), 0, Math.PI*2);
     ctx.fill();
     const ratio = getRatio();
 
-    // Barre de progression
+    // Barre de progression (50% réel = 100% visuel)
+    const visualPct = Math.min(ratio * VISUAL_SCALE * 100, 100);
     if (fillEl) {
-      const pct = Math.min(ratio * 100, 100);
-      fillEl.style.width = pct + '%';
-      if (pctEl) pctEl.textContent = Math.round(pct) + ' %';
-      if (pct >= 70) {
-        fillEl.classList.add('pret');
-        if (pctEl) pctEl.classList.add('pret');
-      }
+      fillEl.style.width = visualPct + '%';
+      if (visualPct >= 100) fillEl.classList.add('pret');
+    }
+    if (pctEl) {
+      pctEl.textContent = Math.round(visualPct) + ' %';
+      if (visualPct >= 100) pctEl.classList.add('pret');
     }
 
-    // Doigt d'honneur dès les premiers grattages
-    if (!doigtShown && ratio > 0.08) {
+    // Doigt d'honneur
+    if (!doigtShown && ratio > 0.06) {
       doigtShown = true;
-      document.getElementById('reveal-doigt').classList.add('visible');
+      doigtEl.classList.add('visible');
     }
 
-    // Texte guide progressif
-    for (let i = GUIDES.length - 1; i >= 0; i--) {
-      if (ratio >= GUIDES[i].seuil && i !== lastGuide) {
-        lastGuide = i;
-        if (guideEl) guideEl.textContent = GUIDES[i].texte;
-        break;
-      }
-    }
-
-    // Popup à 70%
-    if (!bonusShown && ratio > 0.70) {
+    // Popup à 50%
+    if (!bonusShown && ratio >= SEUIL_POPUP) {
       bonusShown = true;
-      if (guideEl) guideEl.textContent = '';
+      if (btnRejouer) btnRejouer.style.display = 'block';
       setTimeout(showPopupAmeli, 800);
     }
   }
@@ -273,15 +269,28 @@ function copierUrl() {
     return [(src.clientX - rect.left)*sx, (src.clientY - rect.top)*sy];
   }
 
-  canvas.addEventListener('mousedown',  (e) => { isDrawing = true;  scratch(...getPos(e)); });
-  canvas.addEventListener('mousemove',  (e) => { if (isDrawing) scratch(...getPos(e)); });
+  canvas.addEventListener('mousedown',  (e) => { isDrawing = true;  doScratch(...getPos(e)); });
+  canvas.addEventListener('mousemove',  (e) => { if (isDrawing) doScratch(...getPos(e)); });
   canvas.addEventListener('mouseup',    ()  => { isDrawing = false; });
   canvas.addEventListener('mouseleave', ()  => { isDrawing = false; });
-  canvas.addEventListener('touchstart', (e) => { e.preventDefault(); isDrawing = true;  scratch(...getPos(e)); }, { passive: false });
-  canvas.addEventListener('touchmove',  (e) => { e.preventDefault(); if (isDrawing) scratch(...getPos(e)); },  { passive: false });
+  canvas.addEventListener('touchstart', (e) => { e.preventDefault(); isDrawing = true;  doScratch(...getPos(e)); }, { passive: false });
+  canvas.addEventListener('touchmove',  (e) => { e.preventDefault(); if (isDrawing) doScratch(...getPos(e)); },  { passive: false });
   canvas.addEventListener('touchend',   ()  => { isDrawing = false; });
+
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  return { reset };
 })();
 
+
+/* ═══════════════════════════════════════════
+   REJOUER
+═══════════════════════════════════════════ */
+function rejouerScratch() {
+  scratch.reset();
+  setTimeout(showPopupAmeli, 400);
+}
 
 /* ═══════════════════════════════════════════
    PRIX
