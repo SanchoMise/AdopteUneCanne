@@ -289,7 +289,6 @@ const scratch = (function initScratch() {
 ═══════════════════════════════════════════ */
 function rejouerScratch() {
   scratch.reset();
-  setTimeout(showPopupAmeli, 400);
 }
 
 /* ═══════════════════════════════════════════
