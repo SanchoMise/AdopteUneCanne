@@ -193,8 +193,8 @@
         <p class="panel-collection" id="panel-collection"></p>
 
         <div class="panel-actions">
-          <button class="btn-panier">🛒 Ajouter la main au panier</button>
-          <button class="btn-share" onclick="copierUrl()">Partager ses MST ↗</button>
+          <button class="btn-panier" onclick="ouvrirPaiement()">Acheter cette canne</button>
+          <button class="btn-share" onclick="partagerCanne()">Partager ↗</button>
         </div>
 
         <div class="panel-sep"></div>
@@ -256,6 +256,49 @@
         </div>
         <button class="popup-btn-autoriser" onclick="fermerPopupBtn()">Cliquez pour prendre un rendez-vous</button>
         <a class="popup-lien-donnees">Consulter le traitement des données personnelles</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- POPUP PAIEMENT CB -->
+  <div class="popup-overlay" id="popup-paiement" onclick="fermerPaiement(event)">
+    <div class="popup-cb">
+      <button class="popup-fermer" onclick="fermerPaiementBtn()">✕</button>
+      <div class="popup-cb-header">
+        <span class="cb-logo">🏦</span>
+        <span class="cb-titre">Paiement sécurisé</span>
+        <div class="cb-securise">🔒 SSL · 3D Secure · Certifié Élysée</div>
+      </div>
+      <div class="popup-cb-corps" id="paiement-formulaire">
+        <p class="cb-article" id="cb-article-nom">La Républicaine</p>
+        <p class="cb-article-prix"><span id="cb-article-prix">189,00 €</span></p>
+        <div class="cb-champ">
+          <label>Numéro de carte</label>
+          <input type="text" id="cb-numero" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCB(this)" inputmode="numeric">
+        </div>
+        <div class="cb-ligne-2">
+          <div class="cb-champ">
+            <label>Expiration</label>
+            <input type="text" id="cb-expiry" placeholder="MM / AA" maxlength="7" oninput="formatExpiry(this)" inputmode="numeric">
+          </div>
+          <div class="cb-champ">
+            <label>CVV</label>
+            <input type="text" id="cb-cvv" placeholder="123" maxlength="3" inputmode="numeric">
+          </div>
+        </div>
+        <div class="cb-champ">
+          <label>Nom du titulaire</label>
+          <input type="text" id="cb-nom" placeholder="GUERINEAU EMMANUEL" style="text-transform:uppercase">
+        </div>
+        <button class="btn-payer" onclick="validerPaiement()">Payer maintenant</button>
+        <p class="cb-mentions">Vos données bancaires sont transmises directement à la Direction du Trésor. Le Président vous remercie de votre confiance.</p>
+      </div>
+      <div class="popup-cb-corps paiement-succes" id="paiement-succes" style="display:none">
+        <div class="succes-icon">✅</div>
+        <p class="succes-titre">Paiement accepté</p>
+        <p class="succes-ref">Référence : <strong id="succes-ref"></strong></p>
+        <p class="succes-msg">Votre commande a bien été enregistrée. Votre canne sera expédiée sous 6 à 8 semaines, dès que le Conseil d'État aura levé le recours gracieux déposé par votre famille.</p>
+        <button class="btn-payer" onclick="fermerPaiementBtn()">Fermer</button>
       </div>
     </div>
   </div>
