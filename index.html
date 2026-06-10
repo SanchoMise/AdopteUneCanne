@@ -66,16 +66,7 @@
 
       <div class="carte" data-id="republicaine" onclick="ouvrirPanel('republicaine')">
         <div class="carte-img">
-          <div class="canne-svg">
-            <svg viewBox="0 0 120 200" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-              <rect x="55" y="10" width="10" height="150" rx="5" fill="#8B6914"/>
-              <ellipse cx="60" cy="170" rx="8" ry="5" fill="#5a4010"/>
-              <path d="M55 10 Q35 10 35 35 Q35 55 55 55" fill="none" stroke="#8B6914" stroke-width="10" stroke-linecap="round"/>
-              <rect x="30" y="30" width="6" height="3" fill="#003189"/>
-              <rect x="30" y="36" width="6" height="3" fill="white"/>
-              <rect x="30" y="42" width="6" height="3" fill="#E1000F"/>
-            </svg>
-          </div>
+          <img class="canne-png" src="assets/Canne-Republicaine.png" alt="La Républicaine">
         </div>
         <div class="carte-infos">
           <p class="carte-nom">La Républicaine</p>
@@ -88,15 +79,7 @@
 
       <div class="carte" data-id="souveraine" onclick="ouvrirPanel('souveraine')">
         <div class="carte-img">
-          <div class="canne-svg">
-            <svg viewBox="0 0 120 200" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-              <rect x="55" y="10" width="10" height="150" rx="5" fill="#1a3a6e"/>
-              <ellipse cx="60" cy="170" rx="8" ry="5" fill="#0d1f3c"/>
-              <path d="M55 10 Q38 10 38 30 Q38 48 55 48" fill="none" stroke="#1a3a6e" stroke-width="10" stroke-linecap="round"/>
-              <rect x="52" y="60" width="16" height="4" rx="1" fill="#c9a227"/>
-              <rect x="52" y="100" width="16" height="4" rx="1" fill="#c9a227"/>
-            </svg>
-          </div>
+          <img class="canne-png" src="assets/Canne-Souveraine.png" alt="La Souveraine">
         </div>
         <div class="carte-infos">
           <p class="carte-nom">La Souveraine</p>
@@ -109,14 +92,7 @@
 
       <div class="carte" data-id="resistante" onclick="ouvrirPanel('resistante')">
         <div class="carte-img">
-          <div class="canne-svg">
-            <svg viewBox="0 0 120 200" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-              <rect x="55" y="10" width="11" height="155" rx="4" fill="#5c3a1e"/>
-              <ellipse cx="60" cy="172" rx="9" ry="6" fill="#2d1a08"/>
-              <path d="M55 10 Q40 10 40 32 Q40 50 55 50" fill="none" stroke="#5c3a1e" stroke-width="11" stroke-linecap="round"/>
-              <rect x="52" y="80" width="15" height="40" rx="3" fill="#333" opacity="0.5"/>
-            </svg>
-          </div>
+          <img class="canne-png" src="assets/Canne-Resistante.png" alt="La Résistante">
         </div>
         <div class="carte-infos">
           <p class="carte-nom">La Résistante</p>
@@ -130,16 +106,7 @@
       <div class="carte" data-id="presidentielle" onclick="ouvrirPanel('presidentielle')">
         <span class="badge-prestige">PRESTIGE</span>
         <div class="carte-img" style="background: linear-gradient(135deg,#f5efe0,#e8d9b0)">
-          <div class="canne-svg">
-            <svg viewBox="0 0 120 200" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-              <rect x="55" y="15" width="10" height="145" rx="5" fill="#1a0a00"/>
-              <ellipse cx="60" cy="168" rx="8" ry="5" fill="#0a0400"/>
-              <path d="M55 15 Q37 15 37 36 Q37 54 55 54" fill="none" stroke="#1a0a00" stroke-width="10" stroke-linecap="round"/>
-              <path d="M37 36 Q37 54 55 54" fill="none" stroke="#c9a227" stroke-width="3" stroke-linecap="round"/>
-              <circle cx="60" cy="15" r="8" fill="#c9a227"/>
-              <path d="M56 15 L60 11 L64 15 L62 15 L62 20 L58 20 L58 15Z" fill="#1a0a00"/>
-            </svg>
-          </div>
+          <img class="canne-png" src="assets/Canne-Presidentielle.png" alt="La Présidentielle">
         </div>
         <div class="carte-infos">
           <p class="carte-nom">La Présidentielle</p>
@@ -153,15 +120,7 @@
       <div class="carte" data-id="sensuelle" onclick="ouvrirPanel('sensuelle')">
         <span class="badge-new">NOUVEAU</span>
         <div class="carte-img">
-          <div class="canne-svg">
-            <svg viewBox="0 0 120 200" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-              <rect x="55" y="40" width="11" height="140" rx="5" fill="#c47a5a"/>
-              <ellipse cx="60" cy="188" rx="9" ry="6" fill="#7a3b20"/>
-              <ellipse cx="60" cy="30" rx="16" ry="20" fill="#e8a882"/>
-              <ellipse cx="60" cy="18" rx="13" ry="10" fill="#d4845a"/>
-              <path d="M44 30 Q44 45 60 45 Q76 45 76 30" fill="#c47a5a"/>
-            </svg>
-          </div>
+          <img class="canne-png" src="assets/Canne-Sensuelle.png" alt="La Sensuelle">
         </div>
         <div class="carte-infos">
           <p class="carte-nom">La Sensuelle</p>
@@ -225,7 +184,7 @@
       <button class="panel-close" onclick="_fermerPanel()">✕</button>
 
       <div class="panel-img" id="panel-img">
-        <div class="canne-svg" id="panel-svg"></div>
+        <img class="canne-png" id="panel-canne-img" src="" alt="">
       </div>
 
       <div class="panel-body">

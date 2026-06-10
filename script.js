@@ -6,7 +6,7 @@ const CANNES = {
     nom: 'La Républicaine',
     collection: 'Collection Institutionnelle',
     matiere: 'Chêne des forêts domaniales · Poignée tricolore laquée',
-    desc: 'Issue des chênes centenaires du domaine de Fontainebleau. Poignée tricolore laquée, gravée en lettres dorées : Liberté · Égalité · Sénilité. Recommandée pour les déplacements officiels et les réunions de famille où l\'autorité doit se voir.',
+    desc: 'Issue des chênes centenaires du domaine de Fontainebleau. Poignée tricolore laquée. Gravée en lettres dorées : Liberté · Égalité · Sénilité. Recommandée pour les déplacements officiels et les réunions de famille où l\'autorité doit se voir.',
     prix: 189,
   },
   souveraine: {
@@ -27,15 +27,15 @@ const CANNES = {
     nom: 'La Présidentielle',
     collection: 'Collection Prestige',
     matiere: 'Ébène FSC · Poignée or 18 carats · Coq gaulois gravé laser',
-    desc: 'Notre pièce de référence. Ébène certifié FSC. Poignée plaquée or 18 carats. Gravure laser du coq gaulois sur le fût. Livrée dans un écrin de velours rouge avec certificat d\'authenticité signé (fac-similé — l\'original est occupé ailleurs).',
+    desc: 'Notre pièce de référence absolue. Ébène certifié FSC. Poignée plaquée or 18 carats. Gravure laser du coq gaulois sur le fût — animal choisi pour sa capacité à faire beaucoup de bruit dès l\'aube sans que personne ne lui ait rien demandé. Livrée dans un écrin de velours rouge avec certificat d\'authenticité signé. Le modèle de ceux qui avancent dans la vie avec le sentiment d\'avoir toujours eu raison. Vous vous reconnaîtrez.',
     prix: 489,
   },
   sensuelle: {
     nom: 'La Sensuelle',
-    collection: 'Collection Ardèche',
-    matiere: 'Sycomore · Pommeau cuir de veau naturel tanné',
-    desc: 'Pommeau ergonomique recouvert de cuir de veau pleine fleur tanné en Ardèche, dont la forme, disons, anatomiquement inspirée, a été validée par le Comité d\'Éthique de la Poignée Républicaine (séance à huis clos, procès-verbal disponible sous conditions). Pour celui qui tient toujours bien en main les situations.',
-    prix: 267,
+    collection: 'Collection Nouvelle-Aquitaine',
+    matiere: 'Sycomore · Pommeau cuir naturel tanné',
+    desc: 'Pommeau recouvert de peau de bite — provenance certifiée, donneur consentant, région Nouvelle-Aquitaine (appellation non contrôlée). Forme anatomiquement fidèle, validée par scanner 3D au CHU de Bordeaux dans le cadre d\'un protocole de recherche dont nous préférons taire l\'intitulé exact. Grip incomparable par temps humide. Pour celui qui, toute sa vie, en a tenu des plus petites sans se plaindre.',
+    prix: 269,
   },
 };
 
@@ -83,12 +83,18 @@ function ouvrirPanel(id) {
   const c = CANNES[id];
   if (!c) return;
 
-  // Copier le SVG de la carte dans le panel
-  const carteSvg = document.querySelector(`[data-id="${id}"] .canne-svg`);
-  const panelSvg = document.getElementById('panel-svg');
-  panelSvg.innerHTML = carteSvg ? carteSvg.innerHTML : '';
+  // Image réelle dans le panel
+  const fileMap = {
+    republicaine:   'Canne-Republicaine',
+    souveraine:     'Canne-Souveraine',
+    resistante:     'Canne-Resistante',
+    presidentielle: 'Canne-Presidentielle',
+    sensuelle:      'Canne-Sensuelle',
+  };
+  const panelCanneImg = document.getElementById('panel-canne-img');
+  panelCanneImg.src = `assets/${fileMap[id]}.png`;
+  panelCanneImg.alt = c.nom;
 
-  // Si prestige, fond doré sur l'image panel
   const panelImg = document.getElementById('panel-img');
   panelImg.style.background = id === 'presidentielle'
     ? 'linear-gradient(135deg,#f5efe0,#e8d9b0)'

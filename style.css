@@ -292,12 +292,10 @@ body {
   object-fit: contain;
   padding: 8%;
 }
-.panel-img .canne-svg {
-  width: 60%;
-  height: 60%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.panel-img .canne-png {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
 }
 
 .panel-body { padding: 20px 16px 40px; }
