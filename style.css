@@ -984,6 +984,134 @@ body {
   text-align: center;
   line-height: 1.5;
 }
+.vert-texte { color: #18753c; font-weight: 700; }
+
+/* ── Popup prise de rendez-vous ────────── */
+.popup-rdv {
+  background: #fff;
+  border-radius: 16px;
+  width: min(440px, 94vw);
+  max-height: 85dvh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  z-index: 310;
+}
+.popup-rdv-header {
+  background: var(--bleu);
+  color: #fff;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.rdv-logo { font-size: 1.6rem; }
+.rdv-titre { font-size: 1.05rem; font-weight: 700; margin: 0; }
+.rdv-sous { font-size: 0.7rem; opacity: 0.85; margin: 0; }
+.popup-fermer-rdv {
+  background: rgba(255,255,255,0.9);
+  color: var(--bleu);
+}
+.popup-rdv-scroll {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  flex: 1;
+  padding: 16px 18px 20px;
+}
+.rdv-consigne {
+  font-size: 0.8rem;
+  color: #555;
+  margin: 0 0 12px;
+  font-weight: 600;
+}
+
+/* Choix du docteur */
+.rdv-docteur {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  text-align: left;
+  background: #fff;
+  border: 1.5px solid var(--bordure);
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  font-family: var(--sans);
+  transition: border-color 0.15s, background 0.15s;
+}
+.rdv-docteur:hover { border-color: var(--bleu); background: #f5f9ff; }
+.rdv-docteur-emoji { font-size: 1.7rem; flex-shrink: 0; }
+.rdv-docteur-infos { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+.rdv-docteur-nom { font-weight: 700; font-size: 0.95rem; color: var(--texte); }
+.rdv-docteur-spe { font-size: 0.74rem; color: var(--texte-sec); font-style: italic; }
+.rdv-docteur-dispo { font-size: 0.78rem; color: var(--bleu); margin-top: 2px; }
+.rdv-docteur-fleche { font-size: 1.4rem; color: var(--texte-sec); flex-shrink: 0; }
+
+/* Calendrier */
+.rdv-retour {
+  background: none;
+  border: none;
+  color: var(--bleu);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0 0 10px;
+  font-family: var(--sans);
+}
+.rdv-docteur-entete {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--fond-card);
+  border-radius: 8px;
+  margin-bottom: 14px;
+}
+.rdv-docteur-entete .rdv-docteur-emoji { font-size: 1.5rem; }
+.rdv-docteur-entete span span { display: block; }
+.rdv-creneaux { display: flex; flex-direction: column; gap: 8px; }
+.rdv-creneau {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  text-align: left;
+  background: #fff;
+  border: 1.5px solid var(--bordure);
+  border-radius: 8px;
+  padding: 10px 12px;
+  cursor: pointer;
+  font-family: var(--sans);
+  transition: border-color 0.15s, background 0.15s;
+}
+.rdv-creneau:hover { border-color: var(--bleu); background: #f5f9ff; }
+.rdv-creneau-emoji { font-size: 1.25rem; }
+.rdv-creneau-date { flex: 1; font-weight: 600; font-size: 0.9rem; color: var(--texte); text-transform: capitalize; }
+.rdv-creneau-heure { font-weight: 700; font-size: 0.9rem; color: var(--bleu); }
+
+/* Confirmation */
+.rdv-confirme { text-align: center; padding: 10px 0; }
+.rdv-confirme-icone { font-size: 2.6rem; }
+.rdv-confirme-titre { font-size: 1.2rem; font-weight: 800; color: var(--texte); margin: 8px 0 6px; }
+.rdv-confirme-detail { font-size: 0.92rem; color: var(--texte); line-height: 1.5; font-weight: 600; }
+.rdv-confirme-msg { font-size: 0.8rem; color: #666; line-height: 1.5; margin: 12px 4px 16px; }
+.rdv-confirme-btn {
+  background: var(--bleu);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  font-family: var(--sans);
+}
+.rdv-confirme-btn:hover { background: var(--bleu-fonce); }
 
 /* ═══════════════════════════════════════════
    FOOTER

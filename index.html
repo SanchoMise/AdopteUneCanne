@@ -251,7 +251,7 @@
             <span class="bon-penis-objet-valeur">Agrandissement chirurgical et/ou psychologique du pénis</span>
           </div>
           <p class="bon-penis-ligne"><strong>Code acte :</strong> <span id="code-acte"></span></p>
-          <p class="bon-penis-ligne"><strong>Prise en charge Sécu :</strong> <span class="rouge-texte">0 %</span> — <em>Le contribuable a ses limites.</em></p>
+          <p class="bon-penis-ligne"><strong>Prise en charge Sécu :</strong> <span class="vert-texte">100 %</span> — <em>L'État sait reconnaître les dépenses vitales.</em></p>
           <p class="bon-penis-ligne"><strong>Validité :</strong> <span id="date-validite-penis"></span></p>
           <div class="mentions-legales-bonus">
             <p>¹ Ce bon ne constitue pas un aveu de la République quant à la réalité du besoin.</p>
@@ -260,8 +260,25 @@
             <p>⁴ L'utilisation de ce bon emporte acceptation implicite de l'état de la situation.</p>
           </div>
         </div>
-        <button class="popup-btn-autoriser" onclick="fermerPopupBtn()">Cliquez pour prendre un rendez-vous</button>
+        <button class="popup-btn-autoriser" onclick="ouvrirRdv()">Cliquez pour prendre un rendez-vous</button>
         <a class="popup-lien-donnees">Consulter le traitement des données personnelles</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- POPUP PRISE DE RENDEZ-VOUS -->
+  <div class="popup-overlay" id="popup-rdv" onclick="fermerRdv(event)">
+    <div class="popup-rdv" onclick="event.stopPropagation()">
+      <button type="button" class="popup-fermer popup-fermer-rdv" onclick="fermerRdvBtn()">✕</button>
+      <div class="popup-rdv-header">
+        <span class="rdv-logo">🩺</span>
+        <div>
+          <p class="rdv-titre">Prise de rendez-vous</p>
+          <p class="rdv-sous">Plateforme Nationale de Téléconsultation</p>
+        </div>
+      </div>
+      <div class="popup-rdv-scroll">
+        <div id="rdv-contenu"></div>
       </div>
     </div>
   </div>

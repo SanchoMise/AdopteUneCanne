@@ -64,15 +64,7 @@ let reductionActive = 0;
     codeActe.textContent = codes[Math.floor(Math.random() * codes.length)];
   }
   const dateValidite = document.getElementById('date-validite-penis');
-  if (dateValidite) {
-    const absurdes = [
-      "jusqu'à ce que ça aille mieux",
-      "29 février 2025 (non renouvelable)",
-      "à la saint-glinglin, millésime 2026",
-      "1er janvier 2099 ou épuisement des stocks"
-    ];
-    dateValidite.textContent = absurdes[Math.floor(Math.random() * absurdes.length)];
-  }
+  if (dateValidite) dateValidite.textContent = "30 juin 2026";
 })();
 
 
@@ -415,6 +407,173 @@ function fermerPopup(e) {
 function fermerPopupBtn() {
   document.getElementById('popup-overlay').classList.remove('open');
   document.body.style.overflow = '';
+}
+
+
+/* ═══════════════════════════════════════════
+   PRISE DE RENDEZ-VOUS (faux)
+═══════════════════════════════════════════ */
+const DOCTEURS = {
+  magnotta: {
+    nom: 'Docteur R. Magnotta',
+    specialite: 'Chirurgie nocturne & découpe fine',
+    dispo: 'Tous les soirs, de 23 h à 4 h du matin',
+    emoji: '🔪',
+    heure: 23, dureeMin: 300,
+    estDispo: () => true,            // tous les jours
+  },
+  bruel: {
+    nom: 'Docteur P. Bruel',
+    specialite: 'Médecine de proximité & chansons douces',
+    dispo: 'Vendredis et samedis, à 20 h',
+    emoji: '🍆',
+    heure: 20, dureeMin: 120,
+    estDispo: (d) => d.getDay() === 5 || d.getDay() === 6,
+  },
+  morgane: {
+    nom: 'Docteur C. Morgane',
+    specialite: 'Consultation gourmande en journée',
+    dispo: 'En semaine, de 14 h à 18 h',
+    emoji: '🍩',
+    heure: 14, dureeMin: 240,
+    estDispo: (d) => d.getDay() >= 1 && d.getDay() <= 5,
+  },
+};
+
+const MOIS_FR = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+const JOURS_FR = ['dim.','lun.','mar.','mer.','jeu.','ven.','sam.'];
+
+function ouvrirRdv() {
+  document.getElementById('popup-overlay').classList.remove('open'); // ferme Améli
+  document.getElementById('popup-rdv').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  rdvEtapeDocteurs();
+}
+function fermerRdv(e) {
+  if (e.target !== document.getElementById('popup-rdv')) return;
+  fermerRdvBtn();
+}
+function fermerRdvBtn() {
+  document.getElementById('popup-rdv').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function _rdvScrollTop() {
+  requestAnimationFrame(() => {
+    const s = document.querySelector('.popup-rdv-scroll');
+    if (s) s.scrollTop = 0;
+  });
+}
+
+// Étape 1 — choix du docteur
+function rdvEtapeDocteurs() {
+  const html = `
+    <p class="rdv-consigne">Choisissez un praticien conventionné&nbsp;:</p>
+    ${Object.entries(DOCTEURS).map(([id, d]) => `
+      <button type="button" class="rdv-docteur" onclick="rdvEtapeCalendrier('${id}')">
+        <span class="rdv-docteur-emoji">${d.emoji}</span>
+        <span class="rdv-docteur-infos">
+          <span class="rdv-docteur-nom">${d.nom}</span>
+          <span class="rdv-docteur-spe">${d.specialite}</span>
+          <span class="rdv-docteur-dispo">${d.dispo}</span>
+        </span>
+        <span class="rdv-docteur-fleche">›</span>
+      </button>
+    `).join('')}
+  `;
+  document.getElementById('rdv-contenu').innerHTML = html;
+  _rdvScrollTop();
+}
+
+// Étape 2 — calendrier des créneaux (15 → 30 juin 2026)
+function rdvEtapeCalendrier(docId) {
+  const d = DOCTEURS[docId];
+  let creneaux = '';
+  for (let jour = 15; jour <= 30; jour++) {
+    const date = new Date(2026, 5, jour); // juin = mois 5
+    if (!d.estDispo(date)) continue;
+    const label = `${JOURS_FR[date.getDay()]} ${jour} juin`;
+    const heureLabel = String(d.heure).padStart(2, '0') + ' h';
+    creneaux += `
+      <button type="button" class="rdv-creneau" onclick="rdvReserver('${docId}', ${jour})">
+        <span class="rdv-creneau-emoji">${d.emoji}</span>
+        <span class="rdv-creneau-date">${label}</span>
+        <span class="rdv-creneau-heure">${heureLabel}</span>
+      </button>
+    `;
+  }
+  document.getElementById('rdv-contenu').innerHTML = `
+    <button type="button" class="rdv-retour" onclick="rdvEtapeDocteurs()">‹ Retour aux praticiens</button>
+    <div class="rdv-docteur-entete">
+      <span class="rdv-docteur-emoji">${d.emoji}</span>
+      <span>
+        <span class="rdv-docteur-nom">${d.nom}</span>
+        <span class="rdv-docteur-dispo">${d.dispo}</span>
+      </span>
+    </div>
+    <p class="rdv-consigne">Créneaux disponibles du 15 au 30 juin 2026&nbsp;:</p>
+    <div class="rdv-creneaux">${creneaux}</div>
+  `;
+  _rdvScrollTop();
+}
+
+// Étape 3 — réservation : génère un .ics et l'ajoute au calendrier
+function rdvReserver(docId, jour) {
+  const d = DOCTEURS[docId];
+  const date = new Date(2026, 5, jour);
+  genererICS(d, jour);
+  document.getElementById('rdv-contenu').innerHTML = `
+    <div class="rdv-confirme">
+      <div class="rdv-confirme-icone">${d.emoji}</div>
+      <p class="rdv-confirme-titre">Rendez-vous confirmé</p>
+      <p class="rdv-confirme-detail">
+        ${d.nom}<br>
+        ${JOURS_FR[date.getDay()]} ${jour} juin 2026 à ${String(d.heure).padStart(2,'0')} h
+      </p>
+      <p class="rdv-confirme-msg">
+        L'événement a été ajouté à votre calendrier. Pensez à venir à jeun
+        et accompagné d'une personne de confiance (la République décline toute responsabilité).
+      </p>
+      <button type="button" class="rdv-confirme-btn" onclick="fermerRdvBtn()">Terminer</button>
+    </div>
+  `;
+  _rdvScrollTop();
+}
+
+function genererICS(d, jour) {
+  const pad = (n) => String(n).padStart(2, '0');
+  const fmt = (dt) => `${dt.getFullYear()}${pad(dt.getMonth() + 1)}${pad(dt.getDate())}T${pad(dt.getHours())}${pad(dt.getMinutes())}00`;
+  const debutDate = new Date(2026, 5, jour, d.heure, 0);
+  const finDate = new Date(debutDate.getTime() + d.dureeMin * 60000);
+  const debut = fmt(debutDate);
+  const fin = fmt(finDate);
+  const uid = 'rdv-' + Date.now() + '@republique.fr';
+  const ics = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//Republique Francaise//Cannes//FR',
+    'CALSCALE:GREGORIAN',
+    'METHOD:PUBLISH',
+    'BEGIN:VEVENT',
+    'UID:' + uid,
+    'DTSTAMP:' + debut,
+    'DTSTART:' + debut,
+    'DTEND:' + fin,
+    'SUMMARY:' + d.emoji + ' RDV — ' + d.nom,
+    'DESCRIPTION:Consultation conventionnée Ameli. Venez à jeun.',
+    'LOCATION:Maison de la République, France',
+    'END:VEVENT',
+    'END:VCALENDAR',
+  ].join('\r\n');
+
+  const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'rendez-vous-republique.ics';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
 
