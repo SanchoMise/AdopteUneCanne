@@ -16,6 +16,7 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+button { touch-action: manipulation; -webkit-tap-highlight-color: transparent; cursor: pointer; }
 
 html { font-size: 16px; }
 
@@ -279,23 +280,14 @@ body {
 .panel-close:hover { background: var(--fond-card); }
 
 .panel-img {
-  aspect-ratio: 4/3;
-  background: var(--fond-card);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 16px 16px 0;
+  width: 100%;
+  height: 260px;
+  background: var(--fond-card) center/cover no-repeat;
+  overflow: hidden;
 }
-.panel-img img {
-  max-height: 100%;
-  max-width: 100%;
-  object-fit: contain;
-  padding: 8%;
-}
-.panel-img .canne-png {
-  width: 70%;
-  height: 70%;
-  object-fit: contain;
+.panel-img .canne-png { display: none; } /* l'image est mise en background via JS */
+@media (min-width: 640px) {
+  .panel-img { height: 340px; }
 }
 
 .panel-body { padding: 20px 16px 40px; }
@@ -833,6 +825,109 @@ body {
   color: var(--bleu);
   cursor: pointer;
   text-decoration: underline;
+}
+
+/* ── Popup paiement CB ─────────────────── */
+.popup-cb {
+  background: #fff;
+  border-radius: 16px;
+  width: min(440px, 94vw);
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+.popup-cb-header {
+  background: var(--bleu);
+  color: #fff;
+  padding: 20px 20px 16px;
+  border-radius: 16px 16px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.cb-logo { font-size: 1.5rem; }
+.cb-titre { font-size: 1.1rem; font-weight: 700; }
+.cb-securise { font-size: 0.72rem; opacity: 0.8; }
+.popup-cb-corps {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.cb-article {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--texte);
+  margin: 0;
+}
+.cb-article-prix {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--bleu);
+  margin: 0;
+}
+.cb-champ {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.cb-champ label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.cb-champ input {
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 1rem;
+  font-family: var(--sans);
+  color: var(--texte);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.cb-champ input:focus { border-color: var(--bleu); }
+.cb-ligne-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.btn-payer {
+  background: var(--bleu);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  font-family: var(--sans);
+  transition: background 0.15s;
+}
+.btn-payer:hover { background: var(--bleu-fonce); }
+.cb-mentions {
+  font-size: 0.68rem;
+  color: #999;
+  text-align: center;
+  margin: 0;
+  line-height: 1.4;
+}
+.succes-icon { font-size: 2.5rem; text-align: center; }
+.succes-titre {
+  font-size: 1.2rem;
+  font-weight: 800;
+  text-align: center;
+  color: var(--texte);
+}
+.succes-ref { text-align: center; font-size: 0.85rem; color: #666; }
+.succes-msg {
+  font-size: 0.85rem;
+  color: #555;
+  text-align: center;
+  line-height: 1.5;
 }
 
 /* ═══════════════════════════════════════════

@@ -179,7 +179,7 @@
 
   <!-- PANEL DÉTAIL (bottom sheet) -->
   <div class="panel-overlay" id="panel-overlay" onclick="fermerPanel(event)">
-    <div class="panel" id="panel">
+    <div class="panel" id="panel" onclick="event.stopPropagation()">
       <div class="panel-handle"></div>
       <button class="panel-close" onclick="_fermerPanel()">✕</button>
 
@@ -225,7 +225,7 @@
 
   <!-- POPUP AMELI -->
   <div class="popup-overlay" id="popup-overlay" onclick="fermerPopup(event)">
-    <div class="popup-ameli">
+    <div class="popup-ameli" onclick="event.stopPropagation()">
       <button class="popup-fermer" onclick="fermerPopupBtn()">✕</button>
       <div class="popup-ameli-logo">
         <span class="ameli-word">ameli</span>
@@ -262,7 +262,7 @@
 
   <!-- POPUP PAIEMENT CB -->
   <div class="popup-overlay" id="popup-paiement" onclick="fermerPaiement(event)">
-    <div class="popup-cb">
+    <div class="popup-cb" onclick="event.stopPropagation()">
       <button class="popup-fermer" onclick="fermerPaiementBtn()">✕</button>
       <div class="popup-cb-header">
         <span class="cb-logo">🏦</span>

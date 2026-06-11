@@ -82,8 +82,9 @@ let reductionActive = 0;
 function ouvrirPanel(id) {
   const c = CANNES[id];
   if (!c) return;
+  _canneEnCours = id;
 
-  // Image réelle dans le panel
+  // Image en background-image : méthode la plus fiable sur iOS Safari
   const fileMap = {
     republicaine:   'Canne-Republicaine',
     souveraine:     'Canne-Souveraine',
@@ -91,14 +92,16 @@ function ouvrirPanel(id) {
     presidentielle: 'Canne-Presidentielle',
     sensuelle:      'Canne-Sensuelle',
   };
-  const panelCanneImg = document.getElementById('panel-canne-img');
-  panelCanneImg.src = `assets/${fileMap[id]}.png`;
-  panelCanneImg.alt = c.nom;
-
+  const src = `assets/${fileMap[id]}.png`;
   const panelImg = document.getElementById('panel-img');
-  panelImg.style.background = id === 'presidentielle'
-    ? 'linear-gradient(135deg,#f5efe0,#e8d9b0)'
-    : '';
+  panelImg.style.backgroundImage = `url('${src}')`;
+  panelImg.style.backgroundSize  = 'cover';
+  panelImg.style.backgroundPosition = 'center';
+  if (id === 'presidentielle') {
+    panelImg.style.backgroundColor = '#e8d9b0';
+  } else {
+    panelImg.style.backgroundColor = '';
+  }
 
   document.getElementById('panel-breadcrumb-nom').textContent = c.nom;
   document.getElementById('panel-nom').textContent = c.nom;
@@ -128,10 +131,10 @@ function ouvrirPanel(id) {
 
   const overlay = document.getElementById('panel-overlay');
   overlay.classList.add('open');
+  requestAnimationFrame(() => {
+    document.getElementById('panel').scrollTop = 0;
+  });
   document.body.style.overflow = 'hidden';
-
-  // Swipe down pour fermer
-  initSwipeClose();
 }
 
 function fermerPanel(e) {
@@ -143,23 +146,79 @@ function _fermerPanel() {
   document.body.style.overflow = '';
 }
 
-// Swipe down to dismiss
-function initSwipeClose() {
+// Swipe down to dismiss — listener unique, pas d'empilement
+(function initSwipeClose() {
   const panel = document.getElementById('panel');
   let startY = 0;
-  const onStart = (e) => { startY = (e.touches ? e.touches[0] : e).clientY; };
-  const onEnd = (e) => {
-    const endY = (e.changedTouches ? e.changedTouches[0] : e).clientY;
-    if (endY - startY > 60) _fermerPanel();
-    panel.removeEventListener('touchstart', onStart);
-    panel.removeEventListener('touchend', onEnd);
+  panel.addEventListener('touchstart', (e) => {
+    startY = e.touches[0].clientY;
+  }, { passive: true });
+  panel.addEventListener('touchend', (e) => {
+    const delta = e.changedTouches[0].clientY - startY;
+    // Ne fermer que si swipe vers le bas ET on est en haut du scroll
+    if (delta > 70 && panel.scrollTop === 0) _fermerPanel();
+  }, { passive: true });
+})();
+
+let _canneEnCours = null;
+
+function partagerCanne() {
+  const url = window.location.href;
+  const nom = _canneEnCours ? CANNES[_canneEnCours]?.nom : 'une canne';
+  const fallback = () => {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(url).then(() => alert('Lien copié !')).catch(() => prompt('Copiez ce lien :', url));
+    } else {
+      prompt('Copiez ce lien :', url);
+    }
   };
-  panel.addEventListener('touchstart', onStart, { passive: true });
-  panel.addEventListener('touchend', onEnd, { passive: true });
+  if (navigator.share) {
+    navigator.share({
+      title: `Adopte une Canne — ${nom}`,
+      text: `La République recommande ${nom} pour l'heureux grand-père de la Nafion.`,
+      url,
+    }).catch((err) => {
+      if (err.name !== 'AbortError') fallback();
+    });
+  } else {
+    fallback();
+  }
 }
 
-function copierUrl() {
-  navigator.clipboard?.writeText(window.location.href).catch(() => {});
+function ouvrirPaiement() {
+  const c = _canneEnCours ? CANNES[_canneEnCours] : null;
+  if (!c) return;
+  document.getElementById('cb-article-nom').textContent = c.nom;
+  document.getElementById('cb-article-prix').textContent = c.prix.toFixed(2).replace('.', ',') + ' €';
+  document.getElementById('paiement-formulaire').style.display = 'flex';
+  document.getElementById('paiement-succes').style.display = 'none';
+  document.getElementById('cb-numero').value = '';
+  document.getElementById('cb-expiry').value = '';
+  document.getElementById('cb-cvv').value = '';
+  document.getElementById('cb-nom').value = '';
+  document.getElementById('popup-paiement').classList.add('open');
+}
+function fermerPaiement(e) {
+  if (e.target !== document.getElementById('popup-paiement')) return;
+  fermerPaiementBtn();
+}
+function fermerPaiementBtn() {
+  document.getElementById('popup-paiement').classList.remove('open');
+}
+function validerPaiement() {
+  const ref = 'RF-' + Math.random().toString(36).substring(2,8).toUpperCase() + '-2026';
+  document.getElementById('succes-ref').textContent = ref;
+  document.getElementById('paiement-formulaire').style.display = 'none';
+  document.getElementById('paiement-succes').style.display = 'flex';
+}
+function formatCB(input) {
+  let v = input.value.replace(/\D/g, '').substring(0, 16);
+  input.value = v.replace(/(.{4})/g, '$1 ').trim();
+}
+function formatExpiry(input) {
+  let v = input.value.replace(/\D/g, '').substring(0, 4);
+  if (v.length >= 3) v = v.substring(0,2) + ' / ' + v.substring(2);
+  input.value = v;
 }
 
 
