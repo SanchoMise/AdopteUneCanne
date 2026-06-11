@@ -95,8 +95,10 @@ function ouvrirPanel(id) {
   const src = `assets/${fileMap[id]}.png`;
   const panelImg = document.getElementById('panel-img');
   panelImg.style.backgroundImage = `url('${src}')`;
-  panelImg.style.backgroundSize  = 'cover';
+  panelImg.style.backgroundSize  = 'contain';
   panelImg.style.backgroundPosition = 'center';
+  panelImg.style.backgroundRepeat = 'no-repeat';
+  panelImg.style.backgroundOrigin = 'content-box';
   if (id === 'presidentielle') {
     panelImg.style.backgroundColor = '#e8d9b0';
   } else {
@@ -190,13 +192,19 @@ function ouvrirPaiement() {
   if (!c) return;
   document.getElementById('cb-article-nom').textContent = c.nom;
   document.getElementById('cb-article-prix').textContent = c.prix.toFixed(2).replace('.', ',') + ' €';
-  document.getElementById('paiement-formulaire').style.display = 'flex';
-  document.getElementById('paiement-succes').style.display = 'none';
   document.getElementById('cb-numero').value = '';
   document.getElementById('cb-expiry').value = '';
   document.getElementById('cb-cvv').value = '';
   document.getElementById('cb-nom').value = '';
+  // Affiche le formulaire, cache le succès
+  document.getElementById('paiement-formulaire').classList.add('visible');
+  document.getElementById('paiement-succes').classList.remove('visible');
   document.getElementById('popup-paiement').classList.add('open');
+  // Reset scroll du contenu
+  requestAnimationFrame(() => {
+    const scroll = document.querySelector('.popup-cb-scroll');
+    if (scroll) scroll.scrollTop = 0;
+  });
 }
 function fermerPaiement(e) {
   if (e.target !== document.getElementById('popup-paiement')) return;
@@ -208,8 +216,8 @@ function fermerPaiementBtn() {
 function validerPaiement() {
   const ref = 'RF-' + Math.random().toString(36).substring(2,8).toUpperCase() + '-2026';
   document.getElementById('succes-ref').textContent = ref;
-  document.getElementById('paiement-formulaire').style.display = 'none';
-  document.getElementById('paiement-succes').style.display = 'flex';
+  document.getElementById('paiement-formulaire').classList.remove('visible');
+  document.getElementById('paiement-succes').classList.add('visible');
 }
 function formatCB(input) {
   let v = input.value.replace(/\D/g, '').substring(0, 16);
@@ -377,8 +385,15 @@ function updatePrix(pct) {
    POPUP AMELI
 ═══════════════════════════════════════════ */
 function showPopupAmeli() {
-  document.getElementById('popup-overlay').classList.add('open');
+  const overlay = document.getElementById('popup-overlay');
+  overlay.classList.add('open');
   document.body.style.overflow = 'hidden';
+  requestAnimationFrame(() => {
+    const corps = overlay.querySelector('.popup-corps');
+    if (corps) corps.scrollTop = 0;
+    const ameli = overlay.querySelector('.popup-ameli');
+    if (ameli) ameli.scrollTop = 0;
+  });
 }
 function fermerPopup(e) {
   if (e.target !== document.getElementById('popup-overlay')) return;

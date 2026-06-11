@@ -281,13 +281,15 @@ body {
 
 .panel-img {
   width: 100%;
-  height: 260px;
-  background: var(--fond-card) center/cover no-repeat;
+  height: 280px;
+  background: var(--fond-card) center/contain no-repeat;
+  background-origin: content-box;
+  padding: 24px;
   overflow: hidden;
 }
-.panel-img .canne-png { display: none; } /* l'image est mise en background via JS */
+.panel-img .canne-png { display: none; }
 @media (min-width: 640px) {
-  .panel-img { height: 340px; }
+  .panel-img { height: 360px; }
 }
 
 .panel-body { padding: 20px 16px 40px; }
@@ -832,9 +834,16 @@ body {
   background: #fff;
   border-radius: 16px;
   width: min(440px, 94vw);
-  max-height: 90vh;
-  overflow-y: auto;
+  max-height: 85dvh; /* dvh = hauteur réelle sur iOS avec/sans clavier */
+  display: flex;
+  flex-direction: column;
   position: relative;
+  overflow: hidden;
+}
+.popup-cb-scroll {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  flex: 1;
 }
 .popup-cb-header {
   background: var(--bleu);
@@ -850,9 +859,12 @@ body {
 .cb-securise { font-size: 0.72rem; opacity: 0.8; }
 .popup-cb-corps {
   padding: 20px;
-  display: flex;
+  display: none; /* caché par défaut, activé via JS */
   flex-direction: column;
   gap: 14px;
+}
+.popup-cb-corps.visible {
+  display: flex;
 }
 .cb-article {
   font-weight: 700;
