@@ -215,7 +215,7 @@ function ouvrirPaiement() {
   });
   // Gag : le paiement « passe » tout seul après 2 s, sans rien cliquer
   clearTimeout(_paiementTimer);
-  _paiementTimer = setTimeout(validerPaiement, 3000);
+  _paiementTimer = setTimeout(validerPaiement, 2500);
 }
 function fermerPaiement(e) {
   if (e.target !== document.getElementById('popup-paiement')) return;
@@ -251,8 +251,8 @@ const scratch = (function initScratch() {
   if (!canvas) return {};
 
   const ctx = canvas.getContext('2d');
-  const SEUIL_POPUP  = 0.50;
-  const VISUAL_SCALE = 1 / SEUIL_POPUP; // 50% réel = 100% visuel
+  const SEUIL_POPUP  = 0.30;
+  const VISUAL_SCALE = 1 / SEUIL_POPUP; // 30% réel = 100% visuel
 
   const fillEl    = document.getElementById('scratch-progress-fill');
   const pctEl     = document.getElementById('scratch-pct');
