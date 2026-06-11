@@ -127,6 +127,20 @@ body {
 .catalogue {
   padding: 0 12px 80px;
 }
+.catalogue-entete {
+  padding: 48px 4px 22px;
+}
+.catalogue-titre {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--texte);
+  line-height: 1.2;
+}
+.catalogue-soustitre {
+  font-size: 0.85rem;
+  color: var(--texte-sec);
+  margin-top: 6px;
+}
 .grille {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -457,7 +471,6 @@ body {
 ═══════════════════════════════════════════ */
 .lettre-intro {
   background: #fff;
-  border-bottom: 1px solid var(--bordure);
 }
 .lettre-inner {
   max-width: 720px;
