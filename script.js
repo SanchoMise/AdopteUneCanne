@@ -215,7 +215,7 @@ function ouvrirPaiement() {
   });
   // Gag : le paiement « passe » tout seul après 2 s, sans rien cliquer
   clearTimeout(_paiementTimer);
-  _paiementTimer = setTimeout(validerPaiement, 2000);
+  _paiementTimer = setTimeout(validerPaiement, 3000);
 }
 function fermerPaiement(e) {
   if (e.target !== document.getElementById('popup-paiement')) return;
