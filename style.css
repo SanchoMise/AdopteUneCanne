@@ -246,6 +246,7 @@ body {
   border-radius: 12px 12px 0 0;
   animation: slideUp 0.28s cubic-bezier(0.32,0.72,0,1);
   overscroll-behavior: contain;
+  position: relative; /* ancre la croix de fermeture à l'intérieur de la carte */
 }
 @keyframes slideUp {
   from { transform: translateY(100%); }
@@ -261,14 +262,16 @@ body {
 }
 .panel-close {
   position: absolute;
-  top: 10px;
+  top: 12px;
   right: 12px;
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   border: 1px solid var(--bordure);
-  background: #fff;
-  font-size: 0.85rem;
+  background: rgba(255,255,255,0.92);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  font-size: 0.9rem;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -276,21 +279,20 @@ body {
   color: var(--texte);
   z-index: 10;
   font-family: var(--sans);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.12);
 }
-.panel-close:hover { background: var(--fond-card); }
+.panel-close:hover { background: #fff; }
 
 .panel-img {
   width: 100%;
-  height: 280px;
+  aspect-ratio: 1 / 1;
   background: var(--fond-card) center/contain no-repeat;
   background-origin: content-box;
-  padding: 24px;
+  padding: 32px;
   overflow: hidden;
+  margin-top: 48px; /* dégage la zone de la croix au-dessus de l'image */
 }
 .panel-img .canne-png { display: none; }
-@media (min-width: 640px) {
-  .panel-img { height: 360px; }
-}
 
 .panel-body { padding: 20px 16px 40px; }
 
@@ -848,53 +850,56 @@ body {
 .popup-cb-header {
   background: var(--bleu);
   color: #fff;
-  padding: 20px 20px 16px;
+  padding: 14px 18px 12px;
   border-radius: 16px 16px 0 0;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
+  flex-shrink: 0;
 }
-.cb-logo { font-size: 1.5rem; }
-.cb-titre { font-size: 1.1rem; font-weight: 700; }
-.cb-securise { font-size: 0.72rem; opacity: 0.8; }
+.cb-logo { font-size: 1.3rem; }
+.cb-titre { font-size: 1.05rem; font-weight: 700; }
+.cb-securise { font-size: 0.7rem; opacity: 0.85; }
 .popup-cb-corps {
-  padding: 20px;
+  padding: 16px 18px;
   display: none; /* caché par défaut, activé via JS */
   flex-direction: column;
-  gap: 14px;
+  gap: 10px;
 }
 .popup-cb-corps.visible {
   display: flex;
 }
 .cb-article {
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: var(--texte);
   margin: 0;
 }
 .cb-article-prix {
-  font-size: 1.4rem;
+  font-size: 1.25rem;
   font-weight: 800;
   color: var(--bleu);
-  margin: 0;
+  margin: -4px 0 2px;
 }
 .cb-champ {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 4px;
+  min-width: 0;
 }
 .cb-champ label {
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 600;
   color: #666;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
 .cb-champ input {
+  width: 100%;
   border: 1.5px solid #ddd;
   border-radius: 8px;
-  padding: 10px 12px;
-  font-size: 1rem;
+  padding: 9px 11px;
+  font-size: 0.95rem;
   font-family: var(--sans);
   color: var(--texte);
   outline: none;
@@ -903,40 +908,41 @@ body {
 .cb-champ input:focus { border-color: var(--bleu); }
 .cb-ligne-2 {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+  gap: 10px;
 }
 .btn-payer {
   background: var(--bleu);
   color: #fff;
   border: none;
   border-radius: 8px;
-  padding: 14px;
+  padding: 12px;
   font-size: 1rem;
   font-weight: 700;
   cursor: pointer;
   width: 100%;
   font-family: var(--sans);
   transition: background 0.15s;
+  margin-top: 2px;
 }
 .btn-payer:hover { background: var(--bleu-fonce); }
 .cb-mentions {
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   color: #999;
   text-align: center;
   margin: 0;
-  line-height: 1.4;
+  line-height: 1.35;
 }
-.succes-icon { font-size: 2.5rem; text-align: center; }
+.succes-icon { font-size: 2.4rem; text-align: center; }
 .succes-titre {
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   font-weight: 800;
   text-align: center;
   color: var(--texte);
 }
 .succes-ref { text-align: center; font-size: 0.85rem; color: #666; }
 .succes-msg {
-  font-size: 0.85rem;
+  font-size: 0.83rem;
   color: #555;
   text-align: center;
   line-height: 1.5;

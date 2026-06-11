@@ -187,6 +187,8 @@ function partagerCanne() {
   }
 }
 
+let _paiementTimer = null;
+
 function ouvrirPaiement() {
   const c = _canneEnCours ? CANNES[_canneEnCours] : null;
   if (!c) return;
@@ -205,15 +207,20 @@ function ouvrirPaiement() {
     const scroll = document.querySelector('.popup-cb-scroll');
     if (scroll) scroll.scrollTop = 0;
   });
+  // Gag : le paiement « passe » tout seul après 2 s, sans rien cliquer
+  clearTimeout(_paiementTimer);
+  _paiementTimer = setTimeout(validerPaiement, 2000);
 }
 function fermerPaiement(e) {
   if (e.target !== document.getElementById('popup-paiement')) return;
   fermerPaiementBtn();
 }
 function fermerPaiementBtn() {
+  clearTimeout(_paiementTimer);
   document.getElementById('popup-paiement').classList.remove('open');
 }
 function validerPaiement() {
+  clearTimeout(_paiementTimer);
   const ref = 'RF-' + Math.random().toString(36).substring(2,8).toUpperCase() + '-2026';
   document.getElementById('succes-ref').textContent = ref;
   document.getElementById('paiement-formulaire').classList.remove('visible');
