@@ -146,6 +146,10 @@ function fermerPanel(e) {
 function _fermerPanel() {
   document.getElementById('panel-overlay').classList.remove('open');
   document.body.style.overflow = '';
+  // Retire le #canne=... pour qu'un rafraîchissement ne rouvre pas la carte
+  if (window.location.hash) {
+    history.replaceState(null, '', window.location.pathname + window.location.search);
+  }
 }
 
 // Swipe down to dismiss — listener unique, pas d'empilement
@@ -165,7 +169,9 @@ function _fermerPanel() {
 let _canneEnCours = null;
 
 function partagerCanne() {
-  const url = window.location.href;
+  // Lien profond : ouvre directement la carte de la canne partagée
+  const base = window.location.href.split('#')[0];
+  const url = _canneEnCours ? `${base}#canne=${_canneEnCours}` : base;
   const nom = _canneEnCours ? CANNES[_canneEnCours]?.nom : 'une canne';
   const fallback = () => {
     if (navigator.clipboard) {
@@ -410,3 +416,17 @@ function fermerPopupBtn() {
   document.getElementById('popup-overlay').classList.remove('open');
   document.body.style.overflow = '';
 }
+
+
+/* ═══════════════════════════════════════════
+   LIEN PROFOND — ouvre la carte partagée
+═══════════════════════════════════════════ */
+(function ouvrirDepuisLien() {
+  const m = window.location.hash.match(/canne=([a-z]+)/i);
+  if (m && CANNES[m[1]]) {
+    // Laisse la page se peindre avant d'ouvrir le panneau
+    window.addEventListener('load', () => {
+      requestAnimationFrame(() => ouvrirPanel(m[1]));
+    });
+  }
+})();
